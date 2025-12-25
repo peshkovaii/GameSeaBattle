@@ -91,25 +91,43 @@ public class ShipPlacementPanel extends JPanel {
      * эсминцы, подлодки и минные тральщики.
      */
     private void initializeShipsList() {
+        shipsToPlace.clear();
+
+        System.out.println("\nИНИЦИАЛИЗАЦИЯ СПИСКА КОРАБЛЕЙ");
+
         for (int i = 0; i < GameConfig.getBattleshipCount(); i++) {
-            shipsToPlace.add(new Battleship());
+            Ship ship = new Battleship();
+            shipsToPlace.add(ship);
+            System.out.println("Добавлен: " + ship.getName() + " (" + ship.getSize() + " палуб)");
         }
+
         for (int i = 0; i < GameConfig.getCruiserCount(); i++) {
-            shipsToPlace.add(new Cruiser());
+            Ship ship = new Cruiser();
+            shipsToPlace.add(ship);
+            System.out.println("Добавлен: " + ship.getName() + " (" + ship.getSize() + " палуб)");
         }
+
         for (int i = 0; i < GameConfig.getDestroyerCount(); i++) {
-            shipsToPlace.add(new Destroyer());
+            Ship ship = new Destroyer();
+            shipsToPlace.add(ship);
+            System.out.println("Добавлен: " + ship.getName() + " (" + ship.getSize() + " палуб)");
         }
 
         for (int i = 0; i < GameConfig.getSubmarineCount(); i++) {
-            shipsToPlace.add(new Submarine());
+            Ship ship = new Submarine();
+            shipsToPlace.add(ship);
+            System.out.println("Добавлен: " + ship.getName() + " (" + ship.getSize() + " палуб)");
         }
 
         for (int i = 0; i < GameConfig.getMinesweeperCount(); i++) {
-            shipsToPlace.add(new Minesweeper());
+            Ship ship = new Minesweeper();
+            shipsToPlace.add(ship);
+            System.out.println("Добавлен: " + ship.getName() + " (" + ship.getSize() + " палуб)");
         }
-    }
 
+        System.out.println("ИТОГО кораблей в списке: " + shipsToPlace.size());
+        System.out.println("=== КОНЕЦ ИНИЦИАЛИЗАЦИИ ===\n");
+    }
     /**
      * Инициализирует пользовательский интерфейс панели расстановки.
      * Создает игровое поле, панель управления, элементы выбора кораблей
@@ -270,21 +288,27 @@ public class ShipPlacementPanel extends JPanel {
      * Сбрасывает состояние поля и позволяет начать расстановку заново.
      */
     private void clearBoard() {
-        int size = board.getSize();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                board.getCell(i, j).setState(CellState.EMPTY);
-            }
-        }
-        board.getShips().clear();
-        board.getMines().clear();
-        board.getMinesweepers().clear();
+
+        board.clearShips();
+
+
+        shipsToPlace.clear();
+        initializeShipsList();
 
         boardPanel.updateButtons();
         currentShipIndex = 0;
         shipTypeCombo.setEnabled(true);
         horizontalRadio.setEnabled(true);
         verticalRadio.setEnabled(true);
+
+        String[] shipNames = new String[shipsToPlace.size()];
+        for (int i = 0; i < shipsToPlace.size(); i++) {
+            Ship ship = shipsToPlace.get(i);
+            shipNames[i] = ship.getName() + " (" + ship.getSize() + " палуб)";
+        }
+        shipTypeCombo.setModel(new DefaultComboBoxModel<>(shipNames));
+        shipTypeCombo.setSelectedIndex(0);
+
         statusLabel.setText(getNextShipToPlaceText());
     }
 

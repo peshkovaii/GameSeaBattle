@@ -122,9 +122,10 @@ public class Board {
         if (row < 0 || row >= size || col < 0 || col >= size) return false;
 
         Cell cell = grid[row][col];
-        if (cell.hasShip() || cell.hasMine() || cell.hasMinesweeper()) {
+        if (cell.hasShip()) {
             return false;
         }
+
 
         if (!GameConfig.isAllowTouching()) {
             for (int i = -1; i <= 1; i++) {

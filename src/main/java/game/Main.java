@@ -20,29 +20,19 @@ public class Main {
      * @param args аргументы командной строки (не используются)
      */
     public static void main(String[] args) {
-        System.out.println("     МОРСКОЙ БОЙ с минами и подлодками    ");
+        System.out.println("     МОРСКОЙ БОЙ    ");
         System.out.println("\nДоступные режимы:");
-        System.out.println("1. Графический режим (рекомендуется) - просто нажмите Enter");
-        System.out.println("2. Консольный режим - введите 'Хочу играть!'");
-        System.out.println("3. Режим наблюдателя - введите 'Я наблюдатель'");
+        System.out.println("1. Графический режим - введите 'Хочу играть!' или нажмите Enter");
+        System.out.println("2. Консольный режим - введите 'Я наблюдатель'");
         System.out.print("\nВыберите режим: ");
 
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         String command = scanner.nextLine().trim();
 
         if (command.equalsIgnoreCase("Хочу играть!")) {
-            System.out.print("Хотите графический интерфейс? (да/нет): ");
-            String guiChoice = scanner.nextLine().trim();
+            scanner.close();
+            startGraphicalMode();
 
-            if (guiChoice.equalsIgnoreCase("да") ||
-                    guiChoice.equalsIgnoreCase("yes") ||
-                    guiChoice.equalsIgnoreCase("y")) {
-                scanner.close();
-                startGraphicalMode();
-            } else {
-                scanner.close();
-                startConsoleInteractiveMode();
-            }
         } else if (command.equalsIgnoreCase("Я наблюдатель")) {
             scanner.close();
             startObserverMode();
